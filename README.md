@@ -34,3 +34,20 @@ Java와 MySQL을 활용한 건강 관리 프로그램 제작
 
 ![회원검색](https://user-images.githubusercontent.com/115531867/195978132-848d5b4e-e07b-4bb4-8e41-67af742b97ce.png)
 
+회원 정보 출력
+
+![회원 출력](https://user-images.githubusercontent.com/115531867/195981162-773e3acf-1888-42fe-a3d9-f1e7d66894ff.png)
+
+회원 정보 삭제
+
+![회원정보 삭제](https://user-images.githubusercontent.com/115531867/195981186-a34eaf08-2677-484a-89d2-da3eea2840a5.png)
+
+회원 정보 수정
+
+![회원정보 수정](https://user-images.githubusercontent.com/115531867/195981193-16bcbcda-1f06-4496-b10f-e7e21cf744f7.png)
+
+회원 정보 정렬
+
+![회원정보 정렬](https://user-images.githubusercontent.com/115531867/195981203-7a8085e7-19e0-4aa7-9dec-f56dca05a801.png)
+
+
