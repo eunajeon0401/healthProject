@@ -1,0 +1,113 @@
+
+DROP DATABASE IF EXISTS healthdb;
+CREATE DATABASE healthdb;
+
+USE healthdb;
+CREATE TABLE membertbl(
+	memberNumber char(10) ,
+    name char(10) not null,
+    phoneNumber char(13) not null,
+	startTime datetime null,
+    finishTime datetime null,
+    totalTime datetime null,
+    grade char(10) null,
+    CONSTRAINT pk_memberNumber PRIMARY KEY(memberNumer)
+);
+
+DROP TABLE IF EXISTS deletemembertbl;
+CREATE TABLE deletemembertbl(
+	memberNumber char(10) ,
+    name char(10) not null,
+	phoneNumber char(13) not null,
+    startTime datetime null,
+    finishTime datetime null,
+    totalTime datetime null,
+    grade char(10) null
+
+);
+
+-- 삽입
+
+INSERT INTO membertbl(memberNumber,name,phoneNumber) VALUES('123456','홍길동','010-1111-1111');
+INSERT INTO membertbl(memberNumber,name,phoneNumber) VALUES('111111','박길동','010-4561-1111');
+INSERT INTO membertbl(memberNumber,name,phoneNumber) VALUES('122222','저길동','010-1111-2222');
+INSERT INTO membertbl(memberNumber,name,phoneNumber) VALUES('133332','정길동','010-1331-2222');
+INSERT INTO membertbl(memberNumber,name,phoneNumber) VALUES('124444','한길동','010-1111-2456');
+
+-- 수정
+UPDATE membertbl SET name = '구길동' WHERE memberNumber = '123456';
+
+-- 삭제
+DELETE FROM membertbl WHERE name = '박은아';
+
+
+drop trigger if exists trigger_deletemembertbl//
+-- 트리거 생성
+delimiter //
+CREATE TRIGGER trigger_deletemembertbl 
+	AFTER DELETE 
+    ON membertbl 
+    FOR EACH ROW
+BEGIN
+
+INSERT INTO deletemembertbl VALUES(old.memberNumber,old.name,old.phoneNumber,old.startTime, old.finishTime, old.totalTime, old.grade);
+
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS procedure_update_membertbl;
+-- procedure 생성
+DELIMITER //
+CREATE PROCEDURE procedure_update_membertbl(
+    IN in_memberNumber char(10) ,
+    IN in_startTime datetime ,
+    IN in_finishTime datetime
+)
+
+BEGIN
+   DECLARE in_totalTime dateTime;
+   DECLARE in_gradetime time;
+   DECLARE in_grade varchar(2) default 'F';
+   DECLARE in_hourint int;
+   DECLARE in_minuteint int;
+   DECLARE in_secondint int;
+
+   SET in_totalTime = TIMEDIFF(in_finishTime,in_startTime);
+   SEt in_secondint = TIMESTAMPDIFF(second, in_startTime, in_finishTime);
+    SET in_grade =
+         CASE
+            WHEN in_secondint >= 7200 THEN 'A'
+            WHEN in_secondint >= 5400 THEN 'B'
+            WHEN in_secondint >= 3600 THEN 'C'
+            WHEN in_secondint >= 1800 THEN 'D'
+            ELSE 'F'
+END;
+   UPDATE membertbl set startTime = in_startTime , finishTime = in_finishTime , 
+		  totalTime = in_totalTime, grade = in_grade where memberNumber = in_memberNumber;
+end//
+DELIMITER ;
+
+CALL procedure_update_membertbl('123456','2022-10-11 17:00:51','2022-10-11 18:45:51');
+
+-- function 생성
+SET GLOBAL log_bin_trust_function_creators = 1;
+delimiter //
+
+CREATE FUNCTION getgradeFunc(data char(2))
+    RETURNS int
+BEGIN
+    DECLARE countmember int;
+    SET countmember = (select count(*) from membertbl where grade = data);
+    RETURN countmember;
+END //
+
+DELIMITER ;
+
+SELECT getgradeFunc('A');
+
+-- index 설정 : memberNumber
+CREATE INDEX idx_membertbl_memberNumber on membertbl(memberNumber);
+
+-- 출력
+SELECT * from membertbl;
+SELECT * from deletemembertbl;
