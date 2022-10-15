@@ -26,3 +26,11 @@ Java와 MySQL을 활용한 건강 관리 프로그램 제작
 
 ![운동 시작시간](https://user-images.githubusercontent.com/115531867/195975846-beba88d4-5128-435a-8356-eec139db9d9f.png)
 
+회원 운동 종료시간 입력
+
+![운동 종료시간](https://user-images.githubusercontent.com/115531867/195978129-4020ae36-481d-473e-aca5-da401afe10a1.png)
+
+회원 정보 검색
+
+![회원검색](https://user-images.githubusercontent.com/115531867/195978132-848d5b4e-e07b-4bb4-8e41-67af742b97ce.png)
+
