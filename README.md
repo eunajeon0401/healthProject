@@ -11,7 +11,7 @@ Java와 MySQL을 활용한 건강 관리 프로그램 제작
 | OS | Windows 10 Home |
 | Language | Java 17.0.4 |
 | Editor | Eclipse 2022-06(4.24.0) |
-| DBMS | MySQL Workbench 8.3 |
+| DBMS | MySQL Workbench 8.0 |
 | Github | https://github.com/eunajeon0401/healthProject |
 
 ## 개발기간
